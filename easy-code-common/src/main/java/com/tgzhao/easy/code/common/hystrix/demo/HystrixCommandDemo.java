@@ -29,6 +29,7 @@ import com.netflix.hystrix.HystrixCommandMetrics;
 import com.netflix.hystrix.HystrixCommandMetrics.HealthCounts;
 import com.netflix.hystrix.HystrixRequestLog;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
+import com.tgzhao.easy.code.common.comm.NamedThreadFactory;
 
 /**
  * Executable client that demonstrates the lifecycle, metrics, request log and behavior of HystrixCommands.
@@ -57,7 +58,8 @@ public class HystrixCommandDemo {
      * 
      * Use CallerRunsPolicy so we can just keep iterating and adding to it and it will block when full.
      */
-    private final ThreadPoolExecutor pool = new ThreadPoolExecutor(5, 5, 5, TimeUnit.DAYS, new SynchronousQueue<Runnable>(), new ThreadPoolExecutor.CallerRunsPolicy());
+    private final ThreadPoolExecutor pool = new ThreadPoolExecutor(5, 5, 5, TimeUnit.DAYS, new SynchronousQueue<Runnable>(),
+            new NamedThreadFactory("hystrixTest"), new ThreadPoolExecutor.CallerRunsPolicy());
 
     public void startDemo() {
         startMetricsMonitor();
