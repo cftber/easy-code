@@ -34,6 +34,7 @@ System.out.println(BigDecimal.valueOf(1).divide(BigDecimal.valueOf(3), 2, BigDec
 public class BigDecimalTest {
     @Test
     public void constructTest() {
+
         System.out.println(BigDecimal.valueOf(1.22)); //*****
         System.out.println(new BigDecimal(1.22));  //不推荐
         /*output;
@@ -41,5 +42,11 @@ public class BigDecimalTest {
         1.2199999999999999733546474089962430298328399658203125*/
     }
 
+    @Test
+    public void addTest() {
+        BigDecimal one = BigDecimal.valueOf(22.32);
+        one = one.add(BigDecimal.ONE);
+        System.out.println(one);
+    }
 
 }
