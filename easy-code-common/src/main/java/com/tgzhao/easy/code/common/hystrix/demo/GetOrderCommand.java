@@ -17,6 +17,10 @@ package com.tgzhao.easy.code.common.hystrix.demo;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandKey;
+import com.netflix.hystrix.HystrixCommandProperties;
+
+import static com.netflix.hystrix.HystrixCommandProperties.ExecutionIsolationStrategy.THREAD;
 
 /**
  * Sample HystrixCommand simulating one that would fetch Order objects from a remote service or database.
@@ -28,7 +32,12 @@ public class GetOrderCommand extends HystrixCommand<Order> {
     private final int orderId;
 
     public GetOrderCommand(int orderId) {
-        super(HystrixCommandGroupKey.Factory.asKey("Order"));
+        //super(HystrixCommandGroupKey.Factory.asKey("Order"));
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("Order"))
+              .andCommandKey(HystrixCommandKey.Factory.asKey("OrderGet"))
+              .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
+                      .withExecutionIsolationStrategy(THREAD)
+                      .withCircuitBreakerEnabled(true)));
         this.orderId = orderId;
     }
 
